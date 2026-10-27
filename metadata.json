@@ -1,0 +1,8 @@
+{
+  "name": "Mundo RPG Procedural 2D Infinito",
+  "description": "Mundo procedural 2D infinito estilo RPG com renderização em Canvas, biomas variados com lagos naturais e nascentes em oásis, combate em tempo real com monstros e slimes, sistema de vida e derrota do personagem, inventário com 12 slots de equipamento, mesa de fusão e ciclo dia/noite.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

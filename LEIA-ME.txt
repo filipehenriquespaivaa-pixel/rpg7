@@ -1,0 +1,200 @@
+==================================================
+Mundo RPG Procedural 2D Infinito
+==================================================
+
+COMO EXECUTAR:
+- Abra o arquivo 'index.html' com duplo clique em qualquer navegador (Chrome, Edge, Firefox).
+- Funciona 100% offline, protocolo file://, sem necessidade de internet, servidor, npm ou compilação.
+
+ESTRUTURA DE PASTAS E ARQUIVOS:
+- index.html: Ponto de entrada. Carrega os scripts em ordem (a ordem importa).
+- css/style.css: Estilos nativos e classes do jogo.
+- js/core/: Regras do mundo, biomas, ruído procedural e sistema de salvamento (save.js).
+- js/creatures/: Registro e definição individual de criaturas (rabbit, wolf, deer, golem, bat, tardigrade, spider, scorpion, dragon, slime).
+- js/citizens/: Registro de habitantes das cidades (skins, perfis e desenho): desert-citizen, port-citizen, snow-citizen, snow-prisoner e snow-soldier. Para editar a aparência de um morador, edite o arquivo dele.
+- js/data/: Definições de itens, recursos coletáveis e receitas de fusão.
+- js/engine/: Motores de desenho (canvas), iluminação, renderização, áudio e gerência de entidades.
+- js/ui/: Interface do usuário (item-icon, hud, inventory, game-main, menu.js e main.js).
+- js/extras/: Ferramentas auxiliares e botões de depuração (colisores-debug.js, mapa-global.js).
+- js/core/snow-peak-city.js: Vila Glacial dos Picos Gelados (24 casas, quartos, banheiros, salas, cozinhas, chaminés com fumaça e ruas de paralelepípedo).
+- js/core/desert-city.js: Povoado das Areias Douradas (17 casas de adobe de cômodo único, sem ruas pavimentadas, esteiras de palha para dormir, potes de mantimentos e telhados com vigas 2.5D).
+- legacy/: Bundle original e histórico de código de referência.
+
+COMO EDITAR OU ADICIONAR UM MÓDULO:
+1. Padrão de Módulo: Crie o arquivo utilizando o namespace global compartilhado:
+   window.Game = window.Game || {};
+   (function (G) {
+     "use strict";
+     // Definições do módulo
+     G.MeuModulo = { ... };
+   })(window.Game);
+2. Carregamento no index.html: Adicione a tag <script defer src="./js/.../meu-modulo.js"></script>
+   no index.html exatamente no ponto correto da ordem de dependência (antes de main.js).
+3. Sem dependências externas: Use apenas JavaScript puro sem import/export e persistência via localStorage com try/catch.
+
+SISTEMA DE SALVAMENTO EM 3 SLOTS E SEED ALEATÓRIA:
+- Start com Seed Aleatória: Todo novo jogo inicia com uma seed procedural aleatória única (nunca fixa).
+- Até 3 Slots de Salve: O menu principal exibe 3 slots de salvamento para gerenciar jornadas.
+- Continuar de Onde Parou: O jogador pode clicar em 'Continuar' em qualquer slot salvo para retomar o mundo, coordenadas exatas, itens, vida e progresso de onde parou.
+- Salvamento no Navegador: Salva via localStorage de forma persistente, tanto ao descansar em fogueiras [F], pelo botão de salvar no menu [⚙️], quanto ao retornar ao menu principal.
+
+CIDADE DOS PICOS GELADOS (VILA GLACIAL DAS ALTURAS):
+- Localizada no bioma de Picos Gelados (SNOW_PEAK / Picos Glaciais).
+- Pavimentação completa de Ruas e Praça Central em Paralelepípedos (cobblestone 3D com juntas e toques de neve).
+- Total de 24 casas charmosas e funcionais (superando o mínimo de 20 casas):
+  * Todas as casas possuem Quarto (cama nórdica com peles quentes de inverno, criado-mudo e guarda-roupa).
+  * Todas as casas possuem Banheiro privativo (tina de banho quente de imersão em madeira, lavatório com espelho e sanitário).
+  * Todas as casas possuem Sala aconchegante (lareira de pedra da montanha com chamas ardentes animadas, poltrona e mesinha).
+  * Todas as casas possuem Cozinha (fogão a lenha de ferro fundido com panela fumegante, bancada de preparo e despensa).
+  * 12 casas possuem Sala e Cozinha integradas em conceito aberto acolhedor, e 12 casas possuem divisão tradicional com vão de porta.
+  * TODAS as 24 casas possuem Chaminé externa de cantaria no telhado com fumaça viva animada ondulando ao vento frio da montanha.
+  * Portas de carvalho maciço interativas (pressione [E] ou clique/toque para abrir e fechar).
+  * Praça Central no Marco Zero [-380, -1220] com a Grande Fogueira Comunal da Cordilheira e Postes de Lampião em ferro forjado.
+  * No Modo Desenvolvedor, o botão '❄️ Ir p/ Cidade Glacial' e a opção 'Picos Glaciais' na HUD teleportam direto para a praça da cidade no bioma gelado.
+
+POVOADO DO DESERTO (ALDEIA DAS AREIAS DOURADAS):
+- Localizado no coração do bioma de Deserto Dourado (DESERT), no Marco [520, 360].
+- Sem ruas pavimentadas: as casas são erguidas diretamente sobre o solo natural de areia do deserto.
+- Casas simples de cômodo único e pequeno, construídas com tijolos de adobe e argila seca ao sol.
+- Casas espalhadas organicamente pelo mapa a uma distância mínima de 4 a 8 quadrados umas das outras.
+- Total de 17 casas (superando o mínimo de 15 casas):
+  * Interior rústico e acolhedor de cômodo único.
+  * Esteira tradicional de palha trançada para dormir com travesseiro de linho enrolado (interativa com [E]: descansa e restaura HP/Vigor).
+  * Potes e ânforas de cerâmica com mantimentos frescos (água fresca na sombra, tâmaras secas doces e grãos; interativos com [E]).
+  * Sem estantes de livros, mesas de estudo ou pergaminhos, preservando a rusticidade de um acampamento/vilarejo tradicional do deserto.
+  * Telhados planos 2.5D de adobe com vigas salientes de madeira de palmeira, com transição suave de transparência (fade) ao entrar e sair da casa.
+  * Ao clicar no bioma "Deserto" no mapa/teleporte, você é levado diretamente ao povoado das areias.
+- População da Aldeia (Moradores do Deserto):
+  * Silhueta esguia e magra, com proporções esbeltas e refinadas adaptadas ao clima do deserto.
+  * Moradores de cores variadas (tons de pele variados: âmbar dourada, pêssego suave, canela quente, bronzeada, trigueira, morena profunda, café e negra retinta).
+  * Cabelos variados e penteados temáticos (preto azeviche, castanho cacau, henna, âmbar e grisalho experiente).
+  * Roupas temáticas de deserto autênticas:
+    - Túnicas longas fluidas ajustadas (dishdasha / jalabiya / caftã) em linho branco do Saara, índigo tuaregue, areia dourada/ocre, verde oásis, carmesim de caravanas e açafrão solar.
+    - Coberturas de cabeça temáticas esbeltas: Turbantes enrolados, Shemaghs com agal duplo preto, Tagelmust tuaregue cobrindo o rosto inferior, lenços fluidos femininos, capuzes de areia e tiaras de couro com turquesa.
+    - Acessórios: Odres de água de couro a tiracolo, ânforas de cerâmica nos braços, cestos de tâmaras doces, cajados de pastor e leques de palha trançada.
+  * Linguagem Rúnica Ancestral (Referência ao Pergaminho de Runas):
+    - Não conversam em português: comunicam-se 100% em RUNAS ANTIGAS do Futhark Sagrado (ex: ᚛ ᛋ ᛟ ᛚ ᛫ ᚨ ᚱ ᛖ ᚾ ᚨ ᛫ ᛏ ᛖ ᛏ ᚱ ᚨ ᛫ ᚲ ᛟ ᛋ ᛗ ᛟ ᛋ ᚜).
+    - Balões de diálogo sobre a cabeça e mensagens de interação ao apertar [F] exibem escrituras rúnicas luminosas.
+  * Rotina viva de RPG:
+    - De dia passeiam pelas dunas abertas e espaços entre as casas, conversam entre si em runas e abrem as portas de madeira ao passar.
+    - À noite todos retornam para suas respectivas casas para descansar sobre as esteiras de junco com efeito visual "zZz".
+    - Interação completa com a tecla [F] em linguagem rúnica ancestral.
+
+SISTEMA DE LIVROS, PERGAMINHOS E BIBLIOTECA:
+1. Coleta Direta e Apenas Itens Coletáveis na Biblioteca:
+   - Na biblioteca e construções, existem apenas livros e pergaminhos reais e coletáveis (sem itens de decoração vazios ou falsos).
+   - Ao interagir com estantes e suportes de pergaminhos [F], o item vai diretamente para a mochila sem aviso intrusivo na tela (somente som de coleta e XP).
+   - Cada livro e pergaminho visível na estante ou suporte corresponde a 1 item coletável: ao retirar todos, a estante ou suporte fica limpo/vazio.
+2. Tipos de Livros e Pergaminhos com Conteúdo Completo:
+   - Livro de Culinária (Vol. I & II): Receitas passo a passo de pães, peixes no espeto, carnes defumadas, banquetes e ambrosia.
+   - Pergaminho de Ferramentas Primitivas: Lascamento de sílex, machadinha, picareta e tochas.
+   - Manual de Construção de Itens Básicos: Fogueiras, fornos de barro, cordas e baús.
+   - Tratado de Armas & Equipamentos Comuns: Espadas de bronze e ferro, chicote de couro, escudos e armaduras.
+   - Pergaminho Ancestral dos Rituais Rúnicos: Geometria sagrada em SVG com círculos concêntricos entrelaçados, triângulos alquímicos e o mistério das ruínas.
+   - Catálogo Ilustrado de Recursos da Terra: Enciclopédia de minérios, madeiras, fibras e ervas.
+   - Atlas Geográfico de Biomas & Guia de Criaturas: Mapas de biomas e bestiário completo (coelhos, lobos, cervos, slimes).
+3. Visualizador Imersivo:
+   - Livros abrem com aparência autêntica de livro encadernado em couro com páginas duplas folheáveis, botões de anterior/próxima e suporte a setas [←]/[→].
+   - Pergaminhos abrem desenrolados com hastes cilíndricas de madeira e pomos dourados, selo de cera e diagramas SVG místicos.
+   - Atalho rápido [J] para abrir o último livro/pergaminho ou através do botão "Ler" no Inventário [I].
+
+4. Aba de Conhecimento no Inventário Comum (Grimório Permanente):
+   - Integrada diretamente ao Inventário [I] (aba 'Conhecimento', ao lado de Itens e Forja).
+   - Organizada em slots de aprendizado categorizados por tipo:
+     * ⚒️ Receitas de Criação & Forja: Culinária (Vol. I & II), Ferramentas Primitivas, Construção Básica e Armas & Equipamentos Comuns.
+     * 📚 Catálogos: Catálogo Ilustrado de Recursos da Terra (minerais, vegetais, caça e aquáticos).
+     * 🗺️ Mapas & Atlas: Atlas Geográfico de Biomas & Bestiário Silvestre (florestas, desertos, oásis, pântanos, montanhas e hábitos da fauna).
+   - Início totalmente vazio e sem spoilers: a aba de conhecimento inicia 100% vazia, sem exibir nomes, referências nem contadores de livros/pergaminhos não aprendidos. Dessa forma o jogador não saberá quantos existem e explorará o mundo em busca de sabedoria.
+   - Slots de Aprendizado Permanentes: à medida que cada livro ou pergaminho é estudado com atenção pelo jogador, ele é catalogado em seu respectivo slot por tipo de aprendizado (Receitas, Catálogos e Mapas).
+   - Acesso e releitura livres: o jogador pode clicar em "Acessar / Reler Manuscrito" a qualquer momento no slot aprendido para reler páginas, fórmulas e conteúdos.
+   - Pergaminhos de Runas Ancestrais: não entram nos slots de aprendizado ainda, pois para aprender seu conteúdo o jogador precisará decifrá-los através de um futuro sistema de decifração.
+
+MELHORIAS NO SISTEMA DE CAVERNAS:
+1. Paredões e Túneis Realistas:
+   - As cavernas agora possuem maciços rochosos intransponíveis (paredões de pedra escura) que delimitam os caminhos subterrâneos.
+   - O interior é formado por túneis sinuosos esculpidos na rocha viva e amplos salões naturais (câmara de cristais, lago subterrâneo e gruta de fungos bioluminescentes).
+   - Acabou a sensação de 'mundo aberto' plano no subsolo: agora o jogador explora verdadeiros labirintos com paredes rochosas de ambos os lados e pontos de mineração e exploração.
+
+2. Saída da Caverna Arquitetônica & Iluminação Balanceada:
+   - A saída da caverna possui a mesma arquitetura majestosa e porte da entrada da superfície.
+   - Iluminação natural suave e equilibrada nas saídas subterrâneas, eliminando ofuscamentos e superexposição de luz.
+
+3. Entrada Automática & Colisor Físico nas Cavernas:
+   - Ao caminhar diretamente de encontro à entrada da caverna, o personagem entra automaticamente no labirinto subterrâneo (assim como na saída de volta à superfície).
+   - Colisor maciço traseiro e lateral: o personagem não atravessa nem passa por cima da estrutura rochosa da caverna, sendo obrigado a contorná-la para acessar a entrada frontal.
+   - Perseguição dinâmica de criaturas: se monstros, slimes ou predadores estiverem perseguindo o aventureiro quando ele cruzar a entrada ou saída da caverna, eles atravessam juntos, mantendo a tensão do combate.
+
+4. Rede Subterrânea Contínua & Viagem Entre Cavernas:
+   - Cada caverna encontrada no mundo superior (superfície) possui uma saída correspondente no mundo subterrâneo nas mesmas coordenadas globais.
+   - Você pode entrar por uma caverna na superfície, viajar pelos túneis subterrâneos e sair por outro portal de caverna em uma região diferente do mundo superior!
+   - Nem todas as cavernas são conectadas entre si: maciços rochosos intransponíveis (paredões) separam diferentes setores subterrâneos, criando atalhos secretos entre algumas regiões enquanto outras cavernas formam redes locais independentes.
+
+5. Escadaria para o Calabouço Inferior (Masmorra Subterrânea):
+   - No subsolo dos biomas com construção (salões gregos), existe exatamente UMA escadaria descendente de ardósia e ferro por bioma que conduz ao andar inferior.
+   - Andar Inferior (Calabouço e Masmorras):
+     * Corredor longo iluminado por tochas de ferro negro.
+     * Prisões pequenas com grades de ferro forjado (algumas trancadas, outras abertas/arrombadas). Pressione [F] ou [E] para abrir/fechar as grades.
+     * Celas contendo ossadas acorrentadas, camas de palha mofada e baús de tesouro.
+     * Posto do carcereiro com mesa de registros e armas enferrujadas.
+     * Sala de Tortura ÚNICA com cavalete de estiramento com manivelas e sangue antigo, donzela de ferro com espinhos internos, gaiola suspensa com ossadas, braseiro ardente com ferros em brasa e mesa de instrumentos de suplício.
+     * Salão da Fossa e Latrinas com poço fétido de esgoto sob grades de ferro e assentos de latrina talhados na alvenaria.
+     * Câmara de provisões e despojos ao final do corredor.
+     * O andar inferior compartilha ambientação com a caverna natural comum, mas as muralhas de cantaria do calabouço são 100% sólidas (sem portas para a caverna comum) e circundadas por pilhas de pedregulhos e cascalho da escavação.
+   - Bússola do Calabouço (Modo Dev):
+     * Ao estar no subsolo do bioma com construção, surge uma bússola dinâmica com agulha 360°, distância em metros/tiles, direção cardeal (N, NE, L, SE, etc.) e botão de teleporte rápido "Ir até Lá", além de um marcador/seta em tempo real no minimapa.
+
+6. CAVERNAS TEMÁTICAS DO DESERTO (TÚNEIS ESTREITOS & ESCORPIÕES PEQUENOS):
+- Localizadas sob as dunas e rochas de arenito do bioma de Deserto Dourado (DESERT).
+- Entradas de Caverna Temáticas: "Fenda da Caverna do Deserto" / "Fenda das Areias Profundas" com formação rochosa de arenito e areia dourada acumulada.
+- Ambiente Subterrâneo Exclusivo:
+  * Bioma de Chão: 'Túnel Arenoso do Deserto' (DESERT_CAVE_FLOOR) com solo árido e poeira fina de areia dourada em suspensão.
+  * Bioma de Paredão: 'Paredão de Arenito das Profundezas' (DESERT_CAVE_WALL) em rocha sedimentar compacta.
+- Apenas Vários Túneis Estreitos:
+  * Não possui salões amplos nem grandes câmaras abertas; é formada por múltiplos túneis estreitos (1 a 2 blocos de largura) que serpenteiam e se entrecruzam pelo arenito.
+- Sem Minerais:
+  * Totalmente livre de minerais (sem filões de ouro/ferro/mitril, sem drusas de cristais, sem cogumelos bioluminescentes nem carrinhos de mineração).
+  * Passagens limpas e navegáveis para o jogador e criaturas, contendo apenas raras ossadas antigas preservadas na areia.
+- Criaturas das Profundezas do Deserto:
+  * SEM MORCEGOS: morcegos não habitam nem surgem nas cavernas do deserto.
+  * Escorpiões Pequenos das Areias: escorpiões pequenos, ágeis e menores que os comuns da superfície (escala 0.58 vs 0.95), com carapaça de âmbar escuro e ferrão venenoso, perfeitos para emboscadas nos túneis estreitos.
+- No Modo Desenvolvedor, o botão '🦂 Ir p/ Caverna Deserto' na HUD teleporta o jogador diretamente para os túneis estreitos da caverna do deserto.
+- No Modo Desenvolvedor, o botão '🗺️ Mapa Global' (ou um clique no Radar/minimapa) abre o mapa do mundo em tela cheia: arraste para mover, use a roda do mouse (ou pinça no toque) para zoom, e a legenda à direita para destacar biomas. Esc fecha. O mapa marca as cidades (Picos Gelados, Deserto e Porto) com centro e raio.
+- O Povoado do Deserto agora nasce DENTRO de um deserto natural da seed (mais longe ou mais perto da origem, conforme o mundo); se a seed não tiver deserto grande o bastante, ele fica no ponto antigo. O botão do modo dev que leva ao Deserto Dourado já leva ao povoado onde ele estiver.
+- A Vila Glacial dos Picos Gelados (com o quartel, a prisão e a Grande Mina Profunda) também nasce DENTRO de um bioma de Picos Glaciais natural da seed, e o botão '❄️ Ir p/ Cidade Glacial' do modo dev leva até onde ela estiver. Em qualquer seed a distância da origem varia (de ~600 a ~9.500 blocos).
+- A Cidade Portuária também nasce numa costa NATURAL da seed: uma divisa reta entre praia e mar com o mar voltado para o sul (em cerca de metade das seeds; nas outras ela fica no ponto antigo, com a costa sintética). O botão do modo dev da Cidade Portuária leva até onde ela estiver. Para voltar ao ponto antigo: window.__legacyPortCity = true. Para voltar ao ponto antigo: window.__legacySnowCity = true (neve) e window.__legacyDesertCity = true (deserto), antes de criar o mundo.
+
+CONTROLES:
+- W, A, S, D ou Setas: Movimentação do personagem
+- E ou F ou Botão de Interagir: Entrar/Sair de cavernas e calabouços, abrir baús e grades, minerar veios, acender fogueira, descansar
+- Espaço / Botão ATK: Atacar corpo a corpo com a arma equipada
+- Shift / Botão SEIXO (Inferior Esquerdo): Mirar e arremessar seixos (segure para mirar com a mira guia e solte para arremessar; toque rápido mira no monstro mais próximo)
+- 2x Toque na direção: Correr (consome Stamina)
+- I: Abrir/Fechar Inventário e Mesa de Forja/Fusão
+- L: Ligar/Desligar Tocha
+- U: Coletar água na margem de lagos
+- P: Pesca com lança na margem da água
+- Fogueiras no Mapa:
+  * Ao se aproximar de uma fogueira, as opções formam uma fila vertical logo acima do botão de acionar tocha:
+    - SALVAR / DESCANSAR (ou ACENDER se estiver apagada)
+    - ALIMENTAR (+10 G com galhos para expandir o fogo)
+    - ASSAR / COLETAR peixe no espeto
+  * Chuva e Fogueiras:
+    - Sob chuva na superfície, as fogueiras comuns vão se enfraquecendo e se apagam aos poucos com o tempo.
+    - Fogueiras apagadas podem ser reacendidas com 2 Pederneiras.
+    - A FOGUEIRA AZUL (ponto de salve registrado do jogador) é mágica e NUNCA se apaga com a chuva!
+
+SISTEMA DE CORTE DE ÁRVORES E TRONCOS DE MADEIRA:
+- Obtenção do Machado: Forjado na Mesa de Fusão [I] (combinando Pedra Lascada + Corda de Fibra Pequena + Galho de Madeira) ou disponível no painel de Armas do Modo Desenvolvedor.
+- Corte de Árvores:
+  * Equipe o Machado de Pedra na mão direita ou esquerda.
+  * Aproxime-se de qualquer árvore da superfície (Carvalhos, Pinheiros, Palmeiras, Salgueiros ou Árvores Carbonizadas).
+  * Golpeie com [Espaço] / Botão de Ataque ou pressione [F] / Interagir encostado no tronco.
+  * São necessários 3 golpes firmes de machado: soltam lascas e produzem som realista de corte em madeira.
+  * Ao cair, a árvore é derrubada, transformando-se em um toco (tree_stump) e concedendo:
+    - 2 a 3x Troncos de Madeira maciça (item_tronco)
+    - 1 a 2x Galhos de Madeira (item_galho)
+    - Chance de Resina de Pinheiro (ao abater pinheiros)
+    - +45 XP de exploração
+- Usos do Tronco de Madeira:
+  * Forjar fogueiras robustas de longa duração diretamente no solo do mapa.
+  * Desbastar troncos em galhos e tábuas usando pedras lascadas ou facas na mesa de fusão.

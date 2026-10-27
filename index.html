@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Mundo RPG Procedural 2D Infinito</title>
+    <meta name="description" content="Mundo procedural 2D infinito estilo RPG com renderização em Canvas, biomas variados com lagos naturais e nascentes em oásis, combate em tempo real com monstros e slimes, sistema de vida e derrota do personagem, inventário com 12 slots de equipamento, mesa de fusão e ciclo dia/noite." />
+    <meta property="og:title" content="Mundo RPG Procedural 2D Infinito" />
+    <meta property="og:description" content="Mundo procedural 2D infinito estilo RPG com renderização em Canvas, biomas variados com lagos naturais e nascentes em oásis, combate em tempo real com monstros e slimes, sistema de vida e derrota do personagem, inventário com 12 slots de equipamento, mesa de fusão e ciclo dia/noite." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>" />
+    
+    <!-- Estilização nativa externa (sem Tailwind, sem CDN) -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!--
+      ORDEM DE CARREGAMENTO = ORDEM ORIGINAL DO CODIGO. Todos os scripts dividem o mesmo escopo global,
+      entao NAO reordene: um arquivo pode usar nomes definidos nos anteriores. Veja ARQUITETURA.md.
+      Todos com "defer": executam em ordem, depois do HTML carregado (existe o <div id="root">).
+    -->
+    <script defer src="./assets/vendor/tailwind-css.js"></script>
+    <script defer src="./assets/vendor/react.js"></script>
+    <script defer src="./assets/vendor/lucide-icons.js"></script>
+    <script defer src="./js/core/noise-e-biomas.js"></script>
+    <!-- Dados: Conhecimento e Descoberta de Receitas da Forja (Estudo e Tentativas) -->
+    <script defer src="./js/data/conhecimento-receitas.js"></script>
+    <!-- Dados: Livros e Pergaminhos (Culinária, Ferramentas, Construção, Armas, Rúnico, Catálogo e Geografia/Criaturas) -->
+    <script defer src="./js/data/livros-e-pergaminhos.js"></script>
+    <!-- Cidade dos Picos Gelados (Ruas de Paralelepípedo, 24 Casas, Chaminés e Lareiras) -->
+    <script defer src="./js/core/snow-peak-city.js"></script>
+    <!-- Aldeia das Areias Douradas (Povoado do Deserto: Casas de Cômodo Único com Esteiras e Potes de Mantimentos) -->
+    <script defer src="./js/core/desert-city.js"></script>
+    <!-- Cidade Portuária das Palmeiras (Praia Tropical: Calçadão Costeiro, Píeres, Embarcações na Água e Casas por Seed) -->
+    <script defer src="./js/core/port-city.js"></script>
+    <script defer src="./js/core/world.js"></script>
+    <script defer src="./js/data/recursos-coletaveis.js"></script>
+    <script defer src="./js/creatures/registry.js"></script>
+    <script defer src="./js/creatures/rabbit.js"></script>
+    <script defer src="./js/creatures/wolf.js"></script>
+    <script defer src="./js/creatures/deer.js"></script>
+    <script defer src="./js/creatures/golem.js"></script>
+    <script defer src="./js/creatures/bat.js"></script>
+    <script defer src="./js/creatures/tardigrade.js"></script>
+    <script defer src="./js/creatures/spider.js"></script>
+    <script defer src="./js/creatures/scorpion.js"></script>
+    <script defer src="./js/creatures/dragon.js"></script>
+    <script defer src="./js/creatures/slime.js"></script>
+    <script defer src="./js/citizens/registry.js"></script>
+    <script defer src="./js/citizens/desert-citizen.js"></script>
+    <script defer src="./js/citizens/port-citizen.js"></script>
+    <script defer src="./js/citizens/snow-citizen.js"></script>
+    <script defer src="./js/citizens/snow-prisoner.js"></script>
+    <script defer src="./js/citizens/snow-soldier.js"></script>
+    <script defer src="./js/core/world-helpers.js"></script>
+    <script defer src="./js/engine/weather.js"></script>
+    <script defer src="./js/engine/render-props.js"></script>
+    <script defer src="./js/engine/renderer.js"></script>
+    <script defer src="./js/engine/audio.js"></script>
+    <script defer src="./js/engine/draw-personagem-e-efeitos.js"></script>
+    <script defer src="./js/engine/weapon-whip.js"></script>
+    <script defer src="./js/engine/draw-itens-e-armas.js"></script>
+    <script defer src="./js/engine/draw-criaturas.js"></script>
+    <script defer src="./js/engine/creatures-manager.js"></script>
+    <script defer src="./js/data/itens.js"></script>
+    <script defer src="./js/ui/item-icon.js"></script>
+    <script defer src="./js/core/item-rules.js"></script>
+    <script defer src="./js/export/standalone-html.js"></script>
+    <script defer src="./js/ui/hud.js"></script>
+    <script defer src="./js/data/receitas-fusao.js"></script>
+    <script defer src="./js/data/fusao-e-loot.js"></script>
+    <script defer src="./js/ui/inventory.js"></script>
+    <!-- Leitor imersivo de Livros (páginas folheáveis) e Pergaminhos (abertura em papiro) -->
+    <script defer src="./js/ui/book-scroll-reader.js"></script>
+    <script defer src="./js/core/save.js"></script>
+    <script defer src="./js/ui/game-main.js"></script>
+    <!-- Menu principal e tela de boas-vindas com botão de Modo Desenvolvedor antes de iniciar o jogo -->
+    <script defer src="./js/ui/menu.js"></script>
+    <script defer src="./js/ui/main.js"></script>
+    <script defer src="./js/extras/colisores-debug.js"></script>
+    <!-- Mapa Global em tela cheia (Modo Desenvolvedor): arrastar, zoom e legenda de biomas -->
+    <script defer src="./js/extras/mapa-global.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

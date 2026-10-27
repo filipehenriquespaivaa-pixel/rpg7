@@ -1,0 +1,14 @@
+{
+  "name": "mundo-rpg-procedural-2d",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node -e \"console.log('Build completed')\"",
+    "lint": "node -e \"import('node:fs').then(fs=>import('node:path').then(path=>import('node:child_process').then(cp=>{function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory()&&e.name!=='node_modules'&&e.name!=='.git'&&e.name!=='legacy')walk(p);else if(e.isFile()&&p.endsWith('.js'))cp.execFileSync(process.execPath,['--check',p]);}}walk('.');console.log('Lint passed');})))\""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
